@@ -1,7 +1,0 @@
-br\com\matheus\bookstore\model\Loan.class
-br\com\matheus\bookstore\BookstorePlugin$1.class
-br\com\matheus\bookstore\BookstorePlugin.class
-br\com\matheus\bookstore\db\ConnectionFactory.class
-br\com\matheus\bookstore\model\User.class
-br\com\matheus\bookstore\dao\BookDAO.class
-br\com\matheus\bookstore\model\Book.class
