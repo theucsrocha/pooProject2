@@ -1,7 +1,7 @@
 br\edu\ifba\inf008\plugins\bookstore\model\Book.class
 br\edu\ifba\inf008\plugins\bookstore\dao\BookDAO.class
 br\edu\ifba\inf008\plugins\bookstore\db\ConnectionFactory.class
-br\edu\ifba\inf008\plugins\BookstorePlugin$1.class
 br\edu\ifba\inf008\plugins\BookstorePlugin.class
 br\edu\ifba\inf008\plugins\bookstore\model\Loan.class
 br\edu\ifba\inf008\plugins\bookstore\model\User.class
+br\edu\ifba\inf008\plugins\bookstore\controller\ManageBooksController.class

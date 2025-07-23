@@ -32,7 +32,7 @@ public class Book {
         return author;
     }
 
-    public int getBookId(){
+    public int getId(){
         return book_id;
     }
 

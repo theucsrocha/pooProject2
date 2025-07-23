@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" 
+            fx:controller="br.edu.ifba.inf008.plugins.bookstore.controller.ManageBooksController">
+    <top>
+        <Label text="Gerenciamento de Livros" BorderPane.alignment="CENTER">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+        </Label>
+    </top>
+    <center>
+        <TableView fx:id="booksTable">
+            <columns>
+                <TableColumn fx:id="idColumn" text="ID" prefWidth="50.0">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="id" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="titleColumn" text="Title" prefWidth="300.0">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="title" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="authorColumn" text="Author" prefWidth="200.0">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="author" />
+                    </cellValueFactory>
+                </TableColumn>
+                 <TableColumn fx:id="copiesColumn" text="Copies" prefWidth="70.0">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="copiesAvailable" />
+                    </cellValueFactory>
+                </TableColumn>
+            </columns>
+        </TableView>
+    </center>
+</BorderPane>
