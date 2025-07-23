@@ -39,4 +39,26 @@ public class BookDAO {
         }
         return books;
     }
+
+    
+    public void save(Book book){
+
+        String sql = "INSERT INTO books (title,author,isbn,published_year,copies_available) VALUES (?,?,?,?,?)";
+
+        try(Connection conn = ConnectionFactory.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)){
+                stmt.setString(1,book.getTitle());
+                stmt.setString(2, book.getAuthor());
+                stmt.setString(3, book.getIsbn());
+                stmt.setInt(4, book.getPublishedYear());
+                stmt.setInt(5, book.getCopiesAvailable());
+                stmt.executeUpdate();
+                System.out.println("Book saved with successfully!");
+            }  
+        
+            catch (SQLException e) {
+                System.err.println("Error while saving book: " + e.getMessage());
+                e.printStackTrace();
+    }
+    }
 }
