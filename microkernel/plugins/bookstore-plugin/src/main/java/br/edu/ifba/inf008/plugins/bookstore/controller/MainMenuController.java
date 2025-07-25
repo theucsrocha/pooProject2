@@ -21,7 +21,7 @@ public class MainMenuController {
     @FXML
     private void openManageBooks() {
         // Chamamos um método de ajuda para carregar a tela de livros.
-        loadTab("Manage Books", "fxml/ManageBooksView.fxml");
+        loadTab("Manage Books", "/br/edu/ifba/inf008/plugins/bookstore/fxml/ManageBooksView.fxml");
     }
 
     @FXML
@@ -37,9 +37,12 @@ public class MainMenuController {
     }
 
     // Método de ajuda para carregar um FXML e criar uma nova aba.
-    private void loadTab(String tabName, String fxmlPath) {
+     private void loadTab(String tabName, String fxmlPath) {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlPath));
+            
+            loader.setClassLoader(getClass().getClassLoader());
+
             Parent root = loader.load();
             uiController.createTab(tabName, root);
         } catch (IOException e) {

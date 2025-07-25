@@ -64,7 +64,9 @@
         <Label text="Year:" GridPane.rowIndex="1" GridPane.columnIndex="2" />
         <TextField fx:id="yearField" promptText="Published Year" GridPane.rowIndex="1" GridPane.columnIndex="3" />
 
+        <Button text="Clear" onAction="#clearFormAction" GridPane.rowIndex="1" GridPane.columnIndex="4" />
         <Button text="Save New Book" onAction="#saveBook" GridPane.rowIndex="1" GridPane.columnIndex="5" />
+        <Button text="Delete Book" onAction="#deleteBook" GridPane.rowIndex="0" GridPane.columnIndex="6" />
     </GridPane>
 </bottom>
 </BorderPane>

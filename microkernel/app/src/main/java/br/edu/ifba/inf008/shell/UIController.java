@@ -38,22 +38,21 @@ public class UIController extends Application implements IUIController
 
     @Override
     public void start(Stage primaryStage) {
-        primaryStage.setTitle("Hello World!");
+          primaryStage.setTitle("Bookstore Manager"); 
 
         menuBar = new MenuBar();
-
         VBox vBox = new VBox(menuBar);
-
         tabPane = new TabPane();
         tabPane.setSide(Side.BOTTOM);
-
         vBox.getChildren().addAll(tabPane);
 
-        Scene scene = new Scene(vBox, 960, 600);
+        
 
+        Scene scene = new Scene(vBox, 960, 600);
         primaryStage.setScene(scene);
         primaryStage.show();
 
+        // Esta linha carrega os plugins DEPOIS que a UI está pronta
         Core.getInstance().getPluginController().init();
     }
 
