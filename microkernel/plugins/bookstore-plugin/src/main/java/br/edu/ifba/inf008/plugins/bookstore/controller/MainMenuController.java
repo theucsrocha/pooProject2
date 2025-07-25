@@ -24,12 +24,11 @@ public class MainMenuController {
         loadTab("Manage Books", "/br/edu/ifba/inf008/plugins/bookstore/fxml/ManageBooksView.fxml");
     }
 
-    @FXML
+   @FXML
     private void openManageUsers() {
-       
-        System.out.println("Funcionalidade de Gerenciar Usuários ainda não implementada.");
+    // Agora, chamamos nosso método de ajuda passando os dados da tela de usuários.
+    loadTab("Manage User", "/br/edu/ifba/inf008/plugins/bookstore/fxml/ManageUsersView.fxml");
     }
-
     @FXML
     private void openManageLoans() {
    

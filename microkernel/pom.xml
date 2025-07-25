@@ -12,6 +12,8 @@
         <module>interfaces</module>
         <module>app</module>
         <module>plugins/bookstore-plugin</module> 
+        <!-- <module>plugins/bookstore-plugin</module>  Você vai remover este depois -->
+        <module>plugins/books-plugin</module> <!-- ADICIONE ESTA LINHA -->
     </modules>
 
 
