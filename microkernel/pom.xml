@@ -11,14 +11,34 @@
     <modules>
         <module>interfaces</module>
         <module>app</module>
-        <module>plugins/bookstore-plugin</module> 
-        <!-- <module>plugins/bookstore-plugin</module>  Você vai remover este depois -->
-        <module>plugins/books-plugin</module> <!-- ADICIONE ESTA LINHA -->
+        <module>plugins/bookstore-common</module>
+        <module>plugins/books-plugin</module>
+        <module>plugins/user-plugin</module> 
+        <module>plugins/menu-plugin</module>
     </modules>
-
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
+        <!-- Define a versão do JavaFX para todo o projeto -->
+        <javafx.version>17</javafx.version>
     </properties>
+
+    <!-- ESTA SEÇÃO GERENCIA AS VERSÕES PARA TODOS OS MÓDULOS FILHOS -->
+    <dependencyManagement>
+        <dependencies>
+            <!-- Gerenciamento do JavaFX -->
+            <dependency>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-controls</artifactId>
+                <version>${javafx.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.openjfx</groupId>
+                <artifactId>javafx-fxml</artifactId>
+                <version>${javafx.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+    
 </project>

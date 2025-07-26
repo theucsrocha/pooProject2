@@ -1,11 +1,11 @@
-package br.edu.ifba.inf008.plugins.bookstore.controller;
+package br.edu.ifba.inf008.plugins.books.controller; 
 
 import java.util.List;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import java.util.Optional;
-import br.edu.ifba.inf008.plugins.bookstore.dao.BookDAO;
-import br.edu.ifba.inf008.plugins.bookstore.model.Book;
+import br.edu.ifba.inf008.plugins.common.dao.BookDAO;
+import br.edu.ifba.inf008.plugins.common.model.Book;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn; // ADICIONE ESTA LINHA
 import javafx.scene.control.TableView;
