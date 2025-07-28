@@ -29,31 +29,31 @@ public class Loan {
         this.book_id = book_id;
     }
 
-    public int getBook_id() {
+    public int getBookId() {
         return book_id;
     }
 
-    public int getUser_id() {
+    public int getUserId() {
         return user_id;
     }
 
-    public int getLoan_id() {
+    public int getLoanId() {
         return loan_id;
     }
 
-    public LocalDate getLoan_date() {
+    public LocalDate getLoanDate() {
         return loan_date;
     }
 
-    public LocalDate getReturn_date() {
+    public LocalDate getReturnDate() {
         return return_date;
     }
 
-    public void setBook_id(int book_id) {
+    public void setBookId(int book_id) {
         this.book_id = book_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUserid(int user_id) {
         this.user_id = user_id;
     }
 
