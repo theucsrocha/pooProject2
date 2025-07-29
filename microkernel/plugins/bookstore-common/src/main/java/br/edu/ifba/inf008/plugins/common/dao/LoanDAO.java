@@ -58,7 +58,7 @@ public class LoanDAO {
             while (rs.next()) {
                 Loan loan = new Loan();
                 loan.setId(rs.getInt("loan_id"));
-                loan.setUserid(rs.getInt("user_id"));
+                loan.setUserId(rs.getInt("user_id"));
                 loan.setBookId(rs.getInt("book_id"));
                 
                 Date loanDate = rs.getDate("loan_date");

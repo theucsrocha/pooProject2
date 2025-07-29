@@ -1,6 +1,7 @@
-package br.edu.ifba.inf008.plugins; // Ou o pacote correto que você definiu
+package br.edu.ifba.inf008.plugins;
 
 import java.io.IOException;
+
 import br.edu.ifba.inf008.interfaces.ICore;
 import br.edu.ifba.inf008.interfaces.IPlugin;
 import br.edu.ifba.inf008.interfaces.IUIController;
