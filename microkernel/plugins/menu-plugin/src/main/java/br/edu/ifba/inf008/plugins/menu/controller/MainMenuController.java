@@ -46,6 +46,15 @@ public class MainMenuController {
     @FXML
     private void openManageLoans() {
         // Esta funcionalidade pode ser implementada no futuro
-        System.out.println("Funcionalidade de Gerenciar Empréstimos ainda não implementada.");
+        try {
+            // Carrega a view de usuários, exatamente como o UserPlugin faz
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/edu/ifba/inf008/plugins//fxml/ManageUsersView.fxml"));
+            loader.setClassLoader(getClass().getClassLoader()); // Importante para encontrar o controller
+            Parent root = loader.load();
+            uiController.createTab("Usuários", root);
+        } catch (IOException e) {
+            System.err.println("Erro ao carregar a view de usuários a partir do menu principal:");
+            e.printStackTrace();
+        }
     }
 }

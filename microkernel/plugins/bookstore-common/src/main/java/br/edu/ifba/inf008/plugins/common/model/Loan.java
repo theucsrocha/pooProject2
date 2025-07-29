@@ -18,6 +18,8 @@ public class Loan {
     private int book_id;
     private LocalDate loan_date;
     private LocalDate return_date;
+    private String userName;
+    private String bookTitle;
    
     public Loan(){
 
@@ -49,6 +51,10 @@ public class Loan {
         return return_date;
     }
 
+    public void setId(int id){
+        loan_id = id;
+    }
+
     public void setBookId(int book_id) {
         this.book_id = book_id;
     }
@@ -57,16 +63,32 @@ public class Loan {
         this.user_id = user_id;
     }
 
-    public void setLoanDate(){
-        loan_date = LocalDate.now();
+    public void setLoanDate(LocalDate date){
+        loan_date = date;
     }
 
-    public void setReturnDate(){
-        return_date = LocalDate.now();
+    public void setReturnDate(LocalDate date){
+        return_date = date;
     }
 
     public void setLoanId(int loan_id){
         this.loan_id = loan_id;
     }
+
+    public String getUserName() {
+    return userName;
+}
+
+    public void setUserName(String userName) {
+    this.userName = userName;
+}
+
+    public String getBookTitle() {
+    return bookTitle;
+}
+
+    public void setBookTitle(String bookTitle) {
+    this.bookTitle = bookTitle;
+}
 
 }
