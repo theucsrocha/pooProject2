@@ -123,4 +123,15 @@ public void decrementCopies(int bookId) {
         e.printStackTrace();
     }
 }
+public void incrementCopies(int bookId) {
+    String sql = "UPDATE books SET copies_available = copies_available + 1 WHERE book_id = ?";
+    try (Connection conn = ConnectionFactory.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setInt(1, bookId);
+        stmt.executeUpdate();
+    } catch (SQLException e) {
+        System.err.println("Error while incrementing book copies: " + e.getMessage());
+        e.printStackTrace();
+    }
+}
 }

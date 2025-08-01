@@ -4,6 +4,7 @@ package br.edu.ifba.inf008.plugins.loans.controller;
 // Importações de todas as classes que vamos precisar
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 import javafx.util.StringConverter;
 import br.edu.ifba.inf008.plugins.common.dao.BookDAO;
@@ -14,6 +15,7 @@ import br.edu.ifba.inf008.plugins.common.model.Loan;
 import br.edu.ifba.inf008.plugins.common.model.User;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -172,4 +174,42 @@ private void setupComboBoxes() {
     bookComboBox.setConverter(bookConverter);
     userComboBox.setConverter(userConverter);
 }
+    @FXML
+    private void confirmReturn(){
+        // 1. Pega o empréstimo que está selecionado na tabela.
+    Loan selectedLoan = loansTable.getSelectionModel().getSelectedItem();
+
+    // 2. Verifica se algum empréstimo foi realmente selecionado.
+    if (selectedLoan == null) {
+        showAlert(Alert.AlertType.WARNING, "Nenhuma Seleção", "Por favor, selecione um empréstimo para registrar a devolução.");
+        return;
+    }
+
+    // 3. Verifica se o empréstimo já não foi devolvido.
+    if (selectedLoan.getReturnDate() != null) {
+        showAlert(Alert.AlertType.INFORMATION, "Aviso", "Este empréstimo já foi devolvido anteriormente.");
+        return;
+    }
+
+    // 4. Cria uma janela de confirmação.
+    Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+    confirmationAlert.setTitle("Confirmar Devolução");
+    confirmationAlert.setHeaderText("Registrar devolução para o livro: " + selectedLoan.getBookTitle());
+    confirmationAlert.setContentText("Você tem certeza?");
+
+    Optional<ButtonType> result = confirmationAlert.showAndWait();
+
+    // 5. Se o usuário clicou em "OK"...
+    if (result.isPresent() && result.get() == ButtonType.OK) {
+        // ...chama o método do DAO para atualizar a data de devolução.
+        this.loanDAO.markAsReturned(selectedLoan.getLoanId());
+
+        // ...chama o método do DAO para devolver a cópia ao estoque.
+        this.bookDAO.incrementCopies(selectedLoan.getBookId());
+
+        // Recarrega as tabelas para mostrar os dados atualizados.
+        loadLoansIntoTable();
+        loadBooksIntoComboBox(); // Para atualizar a contagem de cópias se a tela de livros estiver aberta
+    }
+    }
 }

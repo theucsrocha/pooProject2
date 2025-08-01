@@ -16,6 +16,7 @@
         <module>plugins/user-plugin</module> 
         <module>plugins/menu-plugin</module>
         <module>plugins/loan-plugin</module> 
+        <module>plugins/report-plugin</module> 
 
     </modules>
 

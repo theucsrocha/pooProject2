@@ -103,4 +103,49 @@ public class LoanDAO {
             e.printStackTrace();
         }
     }
+
+    // Adicione este método dentro da sua classe LoanDAO.java
+
+/**
+ * Busca todos os empréstimos que ainda estão ativos (sem data de devolução).
+ * Este método é específico para o relatório de livros emprestados.
+ * @return Uma lista de objetos Loan que representam os empréstimos ativos.
+ */
+public List<Loan> findAllActive() {
+    // A SQL é a mesma do findAll, mas com uma cláusula WHERE crucial no final.
+    String sql = "SELECT l.loan_id, l.user_id, l.book_id, l.loan_date, l.return_date, " +
+                 "u.name as user_name, b.title as book_title " +
+                 "FROM loans l " +
+                 "JOIN users u ON l.user_id = u.user_id " +
+                 "JOIN books b ON l.book_id = b.book_id " +
+                 "WHERE l.return_date IS NULL"; // <-- A MÁGICA DO FILTRO ACONTECE AQUI
+
+    List<Loan> activeLoans = new ArrayList<>();
+
+    try (Connection conn = ConnectionFactory.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql);
+         ResultSet rs = stmt.executeQuery()) {
+
+        while (rs.next()) {
+            Loan loan = new Loan();
+            loan.setId(rs.getInt("loan_id"));
+            loan.setUserId(rs.getInt("user_id"));
+            loan.setBookId(rs.getInt("book_id"));
+
+            Date loanDate = rs.getDate("loan_date");
+            if(loanDate != null) loan.setLoanDate(loanDate.toLocalDate());
+
+            // Preenche os nomes para o relatório.
+            loan.setUserName(rs.getString("user_name"));
+            loan.setBookTitle(rs.getString("book_title"));
+
+            activeLoans.add(loan);
+        }
+
+    } catch (SQLException e) {
+        System.err.println("Error finding active loans: " + e.getMessage());
+        e.printStackTrace();
+    }
+    return activeLoans;
+}
 }

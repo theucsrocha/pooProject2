@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifba.inf008.plugins.reports.controller.ReportController">
+    <top>
+        <Label text="Relatório de Livros Emprestados" BorderPane.alignment="CENTER">
+            <font>
+                <Font name="System Bold" size="18.0" />
+            </font>
+            <padding>
+                <Insets bottom="10.0" top="10.0" />
+            </padding>
+        </Label>
+    </top>
+    <center>
+        <TableView fx:id="reportTable">
+            <columns>
+                <TableColumn fx:id="bookTitleColumn" prefWidth="300.0" text="Título do Livro">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="bookTitle" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="userNameColumn" prefWidth="250.0" text="Nome do Usuário">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="userName" />
+                    </cellValueFactory>
+                </TableColumn>
+                <TableColumn fx:id="loanDateColumn" prefWidth="150.0" text="Data do Empréstimo">
+                    <cellValueFactory>
+                        <PropertyValueFactory property="loanDate" />
+                    </cellValueFactory>
+                </TableColumn>
+            </columns>
+        </TableView>
+    </center>
+</BorderPane>
