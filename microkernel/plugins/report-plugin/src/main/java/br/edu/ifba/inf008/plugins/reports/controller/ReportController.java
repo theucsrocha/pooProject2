@@ -25,23 +25,27 @@ public class ReportController {
 
     @FXML
     public void initialize() {
-        // Instancia nosso DAO
+        // Instantiate our DAO
         this.loanDAO = new LoanDAO();
 
-        // Configura as colunas da tabela
+        // Configure the table columns
         bookTitleColumn.setCellValueFactory(new PropertyValueFactory<>("bookTitle"));
         userNameColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
         loanDateColumn.setCellValueFactory(new PropertyValueFactory<>("loanDate"));
 
-        // Carrega os dados do relatório na tabela
+        // Load the report data into the table
         loadActiveLoans();
     }
 
-    // Método que busca os dados no DAO e atualiza a tabela
+    // Method that fetches data from the DAO and updates the table
     private void loadActiveLoans() {
         reportTable.getItems().clear();
-        // Chama o novo método que filtra apenas os empréstimos ativos
+        // Calls the new method that filters only active loans
         List<Loan> activeLoans = this.loanDAO.findAllActive();
         reportTable.getItems().addAll(activeLoans);
+    }
+
+    public void refresh() {
+        loadActiveLoans();
     }
 }

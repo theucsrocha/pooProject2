@@ -9,31 +9,35 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.MenuItem;
 
+/**
+ * Plugin responsible for managing books.
+ * It adds a "Manage Books" option to the main menu.
+ */
 public class BooksPlugin implements IPlugin {
 
     @Override
     public boolean init() {
-        // Pega o controlador da UI do núcleo
+        // Get the UI controller from the core
         IUIController uiController = ICore.getInstance().getUIController();
 
-        // Cria o item de menu "Gerenciar Livros" dentro de um menu "Cadastros"
-        MenuItem menuItem = uiController.createMenuItem("Cadastros", "Gerenciar Livros");
+        // Create a "Manage Books" menu item under a "Registers" menu
+        MenuItem menuItem = uiController.createMenuItem("Registers", "Manage Books");
 
-        // Define a ação que acontece ao clicar no item de menu
+        // Define the action to be performed when the menu item is clicked
         menuItem.setOnAction(event -> {
             try {
-                // Prepara o carregador para a nossa tela de livros
+                // Prepare the loader for our books screen
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/edu/ifba/inf008/plugins/books/fxml/ManageBooksView.fxml"));
                 loader.setClassLoader(getClass().getClassLoader());
 
-                // Carrega o FXML
+                // Load the FXML
                 Parent root = loader.load();
 
-                // Cria uma nova aba com o conteúdo da nossa tela
-                uiController.createTab("Livros", root);
+                // Create a new tab with the content of our screen
+                uiController.createTab("Books", root);
 
             } catch (IOException e) {
-                System.err.println("Erro ao carregar a view de livros:");
+                System.err.println("Error loading the books view:");
                 e.printStackTrace();
             }
         });

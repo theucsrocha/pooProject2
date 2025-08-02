@@ -28,7 +28,7 @@ public class User {
       return user_id;
    }
 
-   public LocalDate getRegistedAt(){
+   public LocalDate getRegistrationDate(){
       return registered_at;
    }
 

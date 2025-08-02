@@ -1,7 +1,7 @@
 package br.edu.ifba.inf008.plugins.menu.controller;
 
 import java.io.IOException;
-
+import javafx.application.Platform;
 import br.edu.ifba.inf008.interfaces.IUIController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -18,13 +18,13 @@ public class MainMenuController {
     @FXML
     private void openManageBooks() {
         try {
-            // Carrega a view de livros, exatamente como o BooksPlugin faz
+            // Loads the books view, just like the BooksPlugin does
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/edu/ifba/inf008/plugins/books/fxml/ManageBooksView.fxml"));
-            loader.setClassLoader(getClass().getClassLoader()); // Importante para encontrar o controller
+            loader.setClassLoader(getClass().getClassLoader()); // Important for finding the controller
             Parent root = loader.load();
-            uiController.createTab("Livros", root);
+            uiController.createTab("Books", root);
         } catch (IOException e) {
-            System.err.println("Erro ao carregar a view de livros a partir do menu principal:");
+            System.err.println("Error loading the books view from the main menu:");
             e.printStackTrace();
         }
     }
@@ -32,13 +32,13 @@ public class MainMenuController {
     @FXML
     private void openManageUsers() {
         try {
-            // Carrega a view de usuários, exatamente como o UserPlugin faz
+            // Loads the users view, just like the UserPlugin does
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/edu/ifba/inf008/plugins/users/fxml/ManageUsersView.fxml"));
-            loader.setClassLoader(getClass().getClassLoader()); // Importante para encontrar o controller
+            loader.setClassLoader(getClass().getClassLoader()); // Important for finding the controller
             Parent root = loader.load();
-            uiController.createTab("Usuários", root);
+            uiController.createTab("Users", root);
         } catch (IOException e) {
-            System.err.println("Erro ao carregar a view de usuários a partir do menu principal:");
+            System.err.println("Error loading the users view from the main menu:");
             e.printStackTrace();
         }
     }
@@ -46,16 +46,23 @@ public class MainMenuController {
     @FXML
     private void openManageLoans() {
         try {
-            // CORRIJA ESTA LINHA para apontar para a view de empréstimos
+            // Loads the loans view, just like the LoanPlugin does
             FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/edu/ifba/inf008/plugins/loans/fxml/ManageLoansView.fxml"));
             loader.setClassLoader(getClass().getClassLoader());
             Parent root = loader.load();
-            // CORRIJA O TÍTULO DA ABA
-            uiController.createTab("Loans", root);
+            // Creates a tab with a consistent title
+            uiController.createTab("Manage Loans", root);
         } catch (IOException e) {
-            // CORRIJA A MENSAGEM DE ERRO
-            System.err.println("Erro ao carregar a view de empréstimos a partir do menu principal:");
+            // Standardized error message
+            System.err.println("Error loading the loans view from the main menu:");
             e.printStackTrace();
         }
+    }
+
+    @FXML
+    private void exitApplication() {
+        // Platform.exit() is the correct way to close a JavaFX application.
+        Platform.exit();
+        System.exit(0);
     }
 }

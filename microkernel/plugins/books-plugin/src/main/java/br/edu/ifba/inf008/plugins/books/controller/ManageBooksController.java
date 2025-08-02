@@ -7,16 +7,19 @@ import java.util.Optional;
 import br.edu.ifba.inf008.plugins.common.dao.BookDAO;
 import br.edu.ifba.inf008.plugins.common.model.Book;
 import javafx.fxml.FXML;
-import javafx.scene.control.TableColumn; // ADICIONE ESTA LINHA
+import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+/**
+ * Controller for the book management view.
+ */
 public class ManageBooksController {
     
+    // FXML components injected from the view
     @FXML
     private TableView<Book> booksTable;
-    
     @FXML
     private TableColumn<Book, Integer> idColumn;
     @FXML
@@ -25,7 +28,6 @@ public class ManageBooksController {
     private TableColumn<Book, String> authorColumn;
     @FXML
     private TableColumn<Book, Integer> copiesColumn;
-
     @FXML
     private TextField titleField;
     @FXML
@@ -37,89 +39,85 @@ public class ManageBooksController {
     @FXML
     private TextField copiesField;
 
+    // Data Access Object and the currently selected book
     private BookDAO bookDAO;
     private Book selectedBook;
 
-     @FXML
+    /**
+     * Initializes the controller after its root element has been completely processed.
+     */
+    @FXML
     public void initialize() {
-     
         this.bookDAO = new BookDAO();
 
+        // Set up the table columns to display book properties.
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
         authorColumn.setCellValueFactory(new PropertyValueFactory<>("author"));
         copiesColumn.setCellValueFactory(new PropertyValueFactory<>("copiesAvailable"));
         
+        // Load initial data into the table.
         loadBooks();
+
+        // Add a listener to handle row selection events in the table.
         booksTable.getSelectionModel().selectedItemProperty().addListener(
-            (observable, oldValue, newValue) -> {
-                // 'newValue' é o novo item selecionado (o livro em que o usuário clicou)
-                populateForm(newValue);
-            }
+            (observable, oldValue, newValue) -> populateForm(newValue)
         );
     }
-     private void loadBooks() {
-        // Limpa a tabela antes de carregar novos dados.
+
+    /**
+     * Fetches all books from the database and populates the table.
+     */
+    private void loadBooks() {
         booksTable.getItems().clear();
-        
-        // Usa nosso DAO para buscar a lista de livros do banco.
         List<Book> books = this.bookDAO.findAll();
-        
-        // Adiciona todos os livros da lista na tabela.
         booksTable.getItems().addAll(books);
     }
 
+    /**
+     * Handles the "Save" button action. It creates a new book or updates an
+     * existing one based on whether a book is selected.
+     */
     @FXML
-private void saveBook() {
-    // 1. Pega os dados do formulário (isso não muda).
-    String title = titleField.getText();
-    String author = authorField.getText();
-    String isbn = isbnField.getText();
-    
-    // Validação básica para garantir que campos não estão vazios antes de converter para número
-    if (title.isEmpty() || author.isEmpty() || yearField.getText().isEmpty() || copiesField.getText().isEmpty()) {
-        System.err.println("Todos os campos devem ser preenchidos.");
-        // Futuramente, mostraremos um alerta para o usuário.
-        return;
-    }
-    
-    int year = Integer.parseInt(yearField.getText());
-    int copies = Integer.parseInt(copiesField.getText());
-
-    // 2. AQUI ESTÁ A DECISÃO INTELIGENTE (if/else)
-    if (this.selectedBook == null) {
-        // --- LÓGICA PARA CRIAR UM NOVO LIVRO ---
-        System.out.println("Nenhum livro selecionado, criando um novo...");
+    private void saveBook() {
+        String title = titleField.getText();
+        String author = authorField.getText();
+        String isbn = isbnField.getText();
         
-        Book newBook = new Book();
-        newBook.setTitle(title);
-        newBook.setAuthor(author);
-        newBook.setIsbn(isbn);
-        newBook.setPublishedYear(year);
-        newBook.setCopiesAvailable(copies);
-
-        // Chama o método SAVE do DAO
-        this.bookDAO.save(newBook);
-
-    } else {
-        // --- LÓGICA PARA ATUALIZAR UM LIVRO EXISTENTE ---
-        System.out.println("Livro selecionado encontrado, atualizando...");
+        if (title.isEmpty() || author.isEmpty() || yearField.getText().isEmpty() || copiesField.getText().isEmpty()) {
+            System.err.println("All fields must be filled.");
+            return;
+        }
         
-        // Atualiza o objeto 'selectedBook' que já temos na memória com os novos dados do formulário.
-        this.selectedBook.setTitle(title);
-        this.selectedBook.setAuthor(author);
-        this.selectedBook.setIsbn(isbn);
-        this.selectedBook.setPublishedYear(year);
-        this.selectedBook.setCopiesAvailable(copies);
-        
-        // Chama o método UPDATE do DAO, passando o objeto já atualizado.
-        this.bookDAO.update(this.selectedBook);
+        int year = Integer.parseInt(yearField.getText());
+        int copies = Integer.parseInt(copiesField.getText());
+
+        // If no book is selected, create a new one.
+        if (this.selectedBook == null) {
+            Book newBook = new Book();
+            newBook.setTitle(title);
+            newBook.setAuthor(author);
+            newBook.setIsbn(isbn);
+            newBook.setPublishedYear(year);
+            newBook.setCopiesAvailable(copies);
+            this.bookDAO.save(newBook);
+        // Otherwise, update the selected book.
+        } else {
+            this.selectedBook.setTitle(title);
+            this.selectedBook.setAuthor(author);
+            this.selectedBook.setIsbn(isbn);
+            this.selectedBook.setPublishedYear(year);
+            this.selectedBook.setCopiesAvailable(copies);
+            this.bookDAO.update(this.selectedBook);
+        }
+
+        loadBooks();
+        clearFormAction();
     }
 
-    // 3. Etapas finais que acontecem em ambos os casos (Criar ou Atualizar)
-    loadBooks();      // Recarrega a tabela para mostrar os dados atualizados.
-    clearFormAction(); // Limpa o formulário e o estado de seleção.
-}
+    /**
+     * A helper method to clear all text fields in the form.
+     */
     private void clearFields() {
         titleField.clear();
         authorField.clear();
@@ -127,65 +125,56 @@ private void saveBook() {
         yearField.clear();
         copiesField.clear();
     }
+
+    /**
+     * Fills the form fields with data from the selected book.
+     * @param book The book selected in the table.
+     */
     private void populateForm(Book book) {
-    // Guarda a referência do livro selecionado
-    this.selectedBook = book;
+        this.selectedBook = book;
+        if (book != null) {
+            titleField.setText(book.getTitle());
+            authorField.setText(book.getAuthor());
+            isbnField.setText(book.getIsbn());
+            yearField.setText(String.valueOf(book.getPublishedYear()));
+            copiesField.setText(String.valueOf(book.getCopiesAvailable()));
+        } else {
+            clearFields();
+        }
+    }
 
-    // Se o livro não for nulo (ou seja, se uma linha real foi selecionada)
-    if (book != null) {
-        // Preenche os campos de texto com os dados do livro
-        titleField.setText(book.getTitle());
-        authorField.setText(book.getAuthor());
-        isbnField.setText(book.getIsbn());
-        yearField.setText(String.valueOf(book.getPublishedYear()));
-        copiesField.setText(String.valueOf(book.getCopiesAvailable()));
-    } else {
-        // Se o usuário clicou fora das linhas, limpa o formulário
+    /**
+     * Handles the "Clear" button action. Resets the form for a new entry.
+     */
+    @FXML
+    private void clearFormAction() {
+        booksTable.getSelectionModel().clearSelection();
         clearFields();
-    }
-}
-@FXML
-private void clearFormAction() {
-    // 1. Limpa a seleção na própria tabela.
-    booksTable.getSelectionModel().clearSelection();
-
-    // 2. Chama nosso método de ajuda para limpar os campos de texto.
-    clearFields();
-
-    // 3. Anula a referência ao livro selecionado.
-    // Isso é CRUCIAL para que o botão "Salvar" saiba que deve CRIAR um novo livro, e não ATUALIZAR.
-    this.selectedBook = null;
-}
-
-@FXML
-private void deleteBook() {
-    // 1. Pega o livro que está selecionado na tabela.
-    Book bookToDelete = this.selectedBook;
-
-    // 2. Verifica se algum livro foi realmente selecionado.
-    if (bookToDelete == null) {
-        System.err.println("Nenhum livro selecionado para deletar.");
-        // Futuramente, podemos mostrar um alerta de erro aqui.
-        return;
+        this.selectedBook = null;
     }
 
-    // 3. Cria uma janela de confirmação para o usuário.
-    Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
-    confirmationAlert.setTitle("Confirm Deletion");
-    confirmationAlert.setHeaderText("You are about to delete the book: " + bookToDelete.getTitle());
-    confirmationAlert.setContentText("This action cannot be undone. Are you sure?");
+    /**
+     * Handles the "Delete" button action. Deletes the selected book after confirmation.
+     */
+    @FXML
+    private void deleteBook() {
+        Book bookToDelete = this.selectedBook;
+        if (bookToDelete == null) {
+            System.err.println("No book selected to delete.");
+            return;
+        }
 
-    // 4. Mostra a janela e espera o usuário clicar em um botão (OK ou Cancelar).
-    Optional<ButtonType> result = confirmationAlert.showAndWait();
+        // Show a confirmation dialog before deleting.
+        Alert confirmationAlert = new Alert(Alert.AlertType.CONFIRMATION);
+        confirmationAlert.setTitle("Confirm Deletion");
+        confirmationAlert.setHeaderText("You are about to delete the book: " + bookToDelete.getTitle());
+        confirmationAlert.setContentText("This action cannot be undone. Are you sure?");
 
-    // 5. Se o usuário clicou no botão "OK"...
-    if (result.isPresent() && result.get() == ButtonType.OK) {
-        // ...chama o método delete do DAO, passando o ID do livro.
-        this.bookDAO.delete(bookToDelete.getId());
-
-        // E, finalmente, recarrega a tabela e limpa o formulário.
-        loadBooks();
-        clearFormAction();
+        Optional<ButtonType> result = confirmationAlert.showAndWait();
+        if (result.isPresent() && result.get() == ButtonType.OK) {
+            this.bookDAO.delete(bookToDelete.getId());
+            loadBooks();
+            clearFormAction();
+        }
     }
-}
 }

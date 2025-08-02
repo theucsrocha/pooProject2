@@ -22,5 +22,5 @@
     <Button fx:id="manageBooksButton" onAction="#openManageBooks" text="Manage Books" maxWidth="Infinity" />
     <Button fx:id="manageUsersButton" onAction="#openManageUsers" text="Manage Users" maxWidth="Infinity" />
     <Button fx:id="manageLoansButton" onAction="#openManageLoans" text="Manage Loans" maxWidth="Infinity" />
-
+    <Button fx:id="exitButton" onAction="#exitApplication" text="EXIT" maxWidth="Infinity" style="-fx-base: #ff6347; -fx-text-fill: white; -fx-font-weight: bold;" />
 </VBox>

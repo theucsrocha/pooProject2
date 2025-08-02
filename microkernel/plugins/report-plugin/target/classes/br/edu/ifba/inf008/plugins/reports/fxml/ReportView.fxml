@@ -10,7 +10,7 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifba.inf008.plugins.reports.controller.ReportController">
     <top>
-        <Label text="Relatório de Livros Emprestados" BorderPane.alignment="CENTER">
+        <Label text="Borrowed Books Report" BorderPane.alignment="CENTER">
             <font>
                 <Font name="System Bold" size="18.0" />
             </font>
@@ -22,17 +22,17 @@
     <center>
         <TableView fx:id="reportTable">
             <columns>
-                <TableColumn fx:id="bookTitleColumn" prefWidth="300.0" text="Título do Livro">
+                <TableColumn fx:id="bookTitleColumn" prefWidth="300.0" text="Book Title">
                     <cellValueFactory>
                         <PropertyValueFactory property="bookTitle" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="userNameColumn" prefWidth="250.0" text="Nome do Usuário">
+                <TableColumn fx:id="userNameColumn" prefWidth="250.0" text="User Name">
                     <cellValueFactory>
                         <PropertyValueFactory property="userName" />
                     </cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="loanDateColumn" prefWidth="150.0" text="Data do Empréstimo">
+                <TableColumn fx:id="loanDateColumn" prefWidth="150.0" text="Loan Date">
                     <cellValueFactory>
                         <PropertyValueFactory property="loanDate" />
                     </cellValueFactory>

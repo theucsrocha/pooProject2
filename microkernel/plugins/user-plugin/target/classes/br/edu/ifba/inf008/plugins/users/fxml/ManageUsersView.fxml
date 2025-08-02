@@ -20,15 +20,10 @@
     <center>
         <TableView fx:id="usersTable">
             <columns>
-                <TableColumn fx:id="idColumn" text="ID" prefWidth="50.0">
-                    <cellValueFactory><PropertyValueFactory property="id" /></cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="nameColumn" text="Name" prefWidth="300.0">
-                    <cellValueFactory><PropertyValueFactory property="name" /></cellValueFactory>
-                </TableColumn>
-                <TableColumn fx:id="emailColumn" text="Email" prefWidth="300.0">
-                    <cellValueFactory><PropertyValueFactory property="email" /></cellValueFactory>
-                </TableColumn>
+                <TableColumn fx:id="idColumn" text="ID" prefWidth="50.0" />
+                <TableColumn fx:id="nameColumn" text="Name" prefWidth="250.0" />
+                <TableColumn fx:id="emailColumn" text="Email" prefWidth="250.0" />
+                <TableColumn fx:id="registrationDateColumn" text="Registered At" prefWidth="150.0" />
             </columns>
         </TableView>
     </center>

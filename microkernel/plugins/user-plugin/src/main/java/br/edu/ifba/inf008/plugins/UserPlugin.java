@@ -1,4 +1,3 @@
-
 package br.edu.ifba.inf008.plugins;
 
 import java.io.IOException;
@@ -16,17 +15,17 @@ public class UserPlugin implements IPlugin {
     public boolean init() {
         IUIController uiController = ICore.getInstance().getUIController();
         
-        MenuItem menuItem = uiController.createMenuItem("Cadastros", "Gerenciar Usuários");
+        MenuItem menuItem = uiController.createMenuItem("Registers", "Manage Users");
 
         menuItem.setOnAction(event -> {
             try {
-                // 2. USE O CAMINHO ABSOLUTO PARA O FXML
+                // Use an absolute path for the FXML
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/edu/ifba/inf008/plugins/users/fxml/ManageUsersView.fxml"));
                 loader.setClassLoader(getClass().getClassLoader());
                 Parent root = loader.load();
-                uiController.createTab("Usuários", root);
+                uiController.createTab("Users", root);
             } catch (IOException e) {
-                System.err.println("Erro ao carregar a view de usuários:");
+                System.err.println("Error loading the users view:");
                 e.printStackTrace();
             }
         });

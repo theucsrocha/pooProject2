@@ -9,30 +9,30 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.control.MenuItem;
 
-// O nome da classe deve ser o mesmo nome do .jar final (ex: LoanPlugin.jar)
+// The class name must match the final .jar name (e.g., LoanPlugin.jar)
 public class LoanPlugin implements IPlugin {
 
     @Override
     public boolean init() {
-        // Pega o controlador da UI do núcleo
+        // Get the UI controller from the core
         IUIController uiController = ICore.getInstance().getUIController();
 
-        // 1. O plugin cria seu próprio item de menu
-        MenuItem menuItem = uiController.createMenuItem("Gerenciamento", "Empréstimos");
+        // 1. The plugin creates its own menu item
+        MenuItem menuItem = uiController.createMenuItem("Management", "Loans");
         
-        // 2. O plugin define o que acontece quando seu item de menu é clicado
+        // 2. The plugin defines what happens when its menu item is clicked
         menuItem.setOnAction(event -> {
             try {
-                // 3. Ele carrega sua PRÓPRIA tela FXML
+                // 3. It loads its OWN FXML screen
                 FXMLLoader loader = new FXMLLoader(getClass().getResource("/br/edu/ifba/inf008/plugins/loans/fxml/ManageLoansView.fxml"));
                 loader.setClassLoader(getClass().getClassLoader());
                 Parent root = loader.load();
                 
-                // 4. E pede ao controlador principal para exibir sua tela em uma nova aba
-                uiController.createTab("Gerenciar Empréstimos", root);
+                // 4. And asks the main controller to display its screen in a new tab
+                uiController.createTab("Manage Loans", root);
 
             } catch (IOException e) {
-                System.err.println("Erro ao carregar a view de empréstimos:");
+                System.err.println("Error loading the loans view:");
                 e.printStackTrace();
             }
         });

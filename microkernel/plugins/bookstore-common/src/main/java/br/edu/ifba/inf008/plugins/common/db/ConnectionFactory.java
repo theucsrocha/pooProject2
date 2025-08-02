@@ -27,7 +27,7 @@ public class ConnectionFactory {
             e.printStackTrace();
             
             // Lança uma exceção para que o código que chamou saiba do erro.
-            throw new RuntimeException("Erro ao conectar ao banco de dados", e);
+            throw new RuntimeException("Erro to connect with data base", e);
         }
     }
 }

@@ -13,7 +13,7 @@
 
 <BorderPane xmlns:fx="http://javafx.com/fxml/1" fx:controller="br.edu.ifba.inf008.plugins.loans.controller.ManageLoansController">
     <top>
-        <Label text="Gerenciamento de Empréstimos" BorderPane.alignment="CENTER">
+        <Label text="Loan Management" BorderPane.alignment="CENTER">
             <font><Font name="System Bold" size="18.0" /></font>
             <padding><Insets bottom="10.0" top="10.0" /></padding>
         </Label>
@@ -24,16 +24,16 @@
                 <TableColumn fx:id="loanIdColumn" text="ID" prefWidth="50.0">
                     <cellValueFactory><PropertyValueFactory property="id" /></cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="bookTitleColumn" text="Livro" prefWidth="250.0">
+                <TableColumn fx:id="bookTitleColumn" text="Book" prefWidth="250.0">
                     <cellValueFactory><PropertyValueFactory property="bookTitle" /></cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="userNameColumn" text="Usuário" prefWidth="250.0">
+                <TableColumn fx:id="userNameColumn" text="User" prefWidth="250.0">
                     <cellValueFactory><PropertyValueFactory property="userName" /></cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="loanDateColumn" text="Data Empréstimo" prefWidth="120.0">
+                <TableColumn fx:id="loanDateColumn" text="Loan Date" prefWidth="120.0">
                     <cellValueFactory><PropertyValueFactory property="loanDate" /></cellValueFactory>
                 </TableColumn>
-                <TableColumn fx:id="returnDateColumn" text="Data Devolução" prefWidth="120.0">
+                <TableColumn fx:id="returnDateColumn" text="Return Date" prefWidth="120.0">
                     <cellValueFactory><PropertyValueFactory property="returnDate" /></cellValueFactory>
                 </TableColumn>
             </columns>
@@ -41,13 +41,13 @@
     </center>
     <bottom>
         <GridPane hgap="10" vgap="10" alignment="CENTER_LEFT" style="-fx-padding: 10;">
-            <Label text="Selecionar Livro:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
-            <ComboBox fx:id="bookComboBox" prefWidth="250.0" promptText="Escolha um livro..." GridPane.rowIndex="0" GridPane.columnIndex="1" />
+            <Label text="Select Book:" GridPane.rowIndex="0" GridPane.columnIndex="0" />
+            <ComboBox fx:id="bookComboBox" prefWidth="250.0" promptText="Choose a book..." GridPane.rowIndex="0" GridPane.columnIndex="1" />
 
-            <Label text="Selecionar Usuário:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
-            <ComboBox fx:id="userComboBox" prefWidth="250.0" promptText="Escolha um usuário..." GridPane.rowIndex="1" GridPane.columnIndex="1" />
+            <Label text="Select User:" GridPane.rowIndex="1" GridPane.columnIndex="0" />
+            <ComboBox fx:id="userComboBox" prefWidth="250.0" promptText="Choose a user..." GridPane.rowIndex="1" GridPane.columnIndex="1" />
 
-            <Button onAction="#registerLoan" text="Registrar Empréstimo" GridPane.rowIndex="1" GridPane.columnIndex="2" />
+            <Button onAction="#registerLoan" text="Register Loan" GridPane.rowIndex="1" GridPane.columnIndex="2" />
             <Button onAction="#confirmReturn" text="Confirm Return" GridPane.rowIndex="1" GridPane.columnIndex="3" />
         </GridPane>
     </bottom>
