@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -8,29 +9,53 @@
     <version>1.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
-    <modules>
-        <module>interfaces</module>
-        <module>app</module>
-        <module>plugins/bookstore-common</module>
-        <module>plugins/books-plugin</module>
-        <module>plugins/user-plugin</module> 
-        <module>plugins/menu-plugin</module>
-        <module>plugins/loan-plugin</module> 
-        <module>plugins/report-plugin</module> 
-
-    </modules>
-
     <properties>
-        <maven.compiler.source>11</maven.compiler.source>
-        <maven.compiler.target>11</maven.compiler.target>
-        <!-- Define a versão do JavaFX para todo o projeto -->
-        <javafx.version>17</javafx.version>
+        <!-- Configurando para Java 24, conforme a especificação -->
+        <maven.compiler.release>24</maven.compiler.release>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <javafx.version>22.0.2</javafx.version> <!-- Versão do JavaFX compatível com Java 24 -->
     </properties>
 
-    <!-- ESTA SEÇÃO GERENCIA AS VERSÕES PARA TODOS OS MÓDULOS FILHOS -->
+    <modules>
+        <module>interfaces</module>
+        <module>plugins/bookstore-common</module>
+        <module>plugins/books-plugin</module>
+        <module>plugins/user-plugin</module>
+        <module>plugins/menu-plugin</module>
+        <module>plugins/loan-plugin</module>
+        <module>plugins/report-plugin</module>
+        <module>app</module>
+    </modules>
+
     <dependencyManagement>
         <dependencies>
-            <!-- Gerenciamento do JavaFX -->
+            <!-- Dependências de Teste ATUALIZADAS para Java 24 -->
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-api</artifactId>
+                <version>5.10.2</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.junit.jupiter</groupId>
+                <artifactId>junit-jupiter-engine</artifactId>
+                <version>5.10.2</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-core</artifactId>
+                <version>5.12.0</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.mockito</groupId>
+                <artifactId>mockito-junit-jupiter</artifactId>
+                <version>5.12.0</version>
+                <scope>test</scope>
+            </dependency>
+
+            <!-- Gerenciamento de Dependências do JavaFX -->
             <dependency>
                 <groupId>org.openjfx</groupId>
                 <artifactId>javafx-controls</artifactId>
@@ -43,5 +68,22 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-    
+
+    <build>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>3.13.0</version>
+                </plugin>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.2.5</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
 </project>

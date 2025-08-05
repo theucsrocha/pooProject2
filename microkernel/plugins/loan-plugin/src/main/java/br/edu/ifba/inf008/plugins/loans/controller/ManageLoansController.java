@@ -3,7 +3,7 @@ package br.edu.ifba.inf008.plugins.loans.controller;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
-import javafx.util.StringConverter;
+
 import br.edu.ifba.inf008.plugins.common.dao.BookDAO;
 import br.edu.ifba.inf008.plugins.common.dao.LoanDAO;
 import br.edu.ifba.inf008.plugins.common.dao.UserDAO;
@@ -17,6 +17,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.util.StringConverter;
 
 /**
  * Controller for the loan management view.
@@ -135,7 +136,8 @@ public class ManageLoansController {
 
         // Clear and reload all data
         loadLoansIntoTable();
-        loadBooksIntoComboBox(); // Reload the books to show the new copy count
+        loadBooksIntoComboBox(); // Esta linha já atualiza os livros
+        bookComboBox.getSelectionModel().clearSelection();
         userComboBox.getSelectionModel().clearSelection();
     }
 

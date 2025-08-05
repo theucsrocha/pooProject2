@@ -1,4 +1,3 @@
-// ESTA É A LINHA MAIS IMPORTANTE A SER CORRIGIDA
 package br.edu.ifba.inf008.plugins.common.dao;
 
 import java.sql.Connection;
@@ -14,6 +13,10 @@ import br.edu.ifba.inf008.plugins.common.model.Book;
 
 public class BookDAO {
 
+    /**
+     * Retrieves all books from the database.
+     * @return A list of Book objects.
+     */
     public List<Book> findAll() {
         String sql = "SELECT * FROM books";
         List<Book> books = new ArrayList<>();
@@ -30,20 +33,21 @@ public class BookDAO {
                 book.setIsbn(rs.getString("isbn"));
                 book.setPublishedYear(rs.getInt("published_year"));
                 book.setCopiesAvailable(rs.getInt("copies_available"));
-
                 books.add(book);
             }
 
         } catch (SQLException e) {
-            System.err.println("Erro ao buscar os livros: " + e.getMessage());
+            System.err.println("Error while fetching books: " + e.getMessage());
             e.printStackTrace();
         }
         return books;
     }
 
-    
+    /**
+     * Saves a new book to the database.
+     * @param book The Book object to be saved.
+     */
     public void save(Book book){
-
         String sql = "INSERT INTO books (title,author,isbn,published_year,copies_available) VALUES (?,?,?,?,?)";
 
         try(Connection conn = ConnectionFactory.getConnection();
@@ -63,23 +67,21 @@ public class BookDAO {
     }
     }
 
+    /**
+     * Updates an existing book's information.
+     * @param book The Book object with updated data.
+     */
     public void update(Book book){
         String sql = "UPDATE books SET title = ?, author = ?, isbn = ?, published_year = ?, copies_available = ? WHERE book_id = ?";
           try (Connection conn = ConnectionFactory.getConnection();
          PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-        // 3. Preenchendo os placeholders (?) com os novos dados do objeto Book.
-        // A ORDEM AQUI DEVE SER EXATAMENTE A MESMA DA SQL.
         stmt.setString(1, book.getTitle());
         stmt.setString(2, book.getAuthor());
         stmt.setString(3, book.getIsbn());
         stmt.setInt(4, book.getPublishedYear());
         stmt.setInt(5, book.getCopiesAvailable());
-        
-        // 6. O placeholder MAIS IMPORTANTE: o ID para a cláusula WHERE.
         stmt.setInt(6, book.getId());
-
-        // 7. Executa o comando de atualização no banco.
         stmt.executeUpdate();
 
         System.out.println("Book updated successfully!");
@@ -89,19 +91,18 @@ public class BookDAO {
         e.printStackTrace();
     }
     }
+
+    /**
+     * Deletes a book from the database by its ID.
+     * @param id The ID of the book to be deleted.
+     */
     public void delete(int id) {
-    // 1. O comando SQL para deletar um registro com base no seu ID.
-    // A cláusula WHERE é ESSENCIAL para não apagar a tabela inteira.
     String sql = "DELETE FROM books WHERE book_id = ?";
 
-    // 2. Usamos o 'try-with-resources' para a conexão e o statement.
     try (Connection conn = ConnectionFactory.getConnection();
          PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-        // 3. Substituímos o placeholder '?' pelo ID que recebemos.
         stmt.setInt(1, id);
-
-        // 4. Executa o comando de deleção no banco.
         stmt.executeUpdate();
 
         System.out.println("Book deleted successfully!");
@@ -112,26 +113,35 @@ public class BookDAO {
     }
 }
 
-public void decrementCopies(int bookId) {
-    String sql = "UPDATE books SET copies_available = copies_available - 1 WHERE book_id = ?";
-    try (Connection conn = ConnectionFactory.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
-        stmt.setInt(1, bookId);
-        stmt.executeUpdate();
-    } catch (SQLException e) {
-        System.err.println("Error while decrementing book copies: " + e.getMessage());
-        e.printStackTrace();
+    /**
+     * Decrements the available copies of a book by one.
+     * @param bookId The ID of the book to be updated.
+     */
+    public void decrementCopies(int bookId) {
+        String sql = "UPDATE books SET copies_available = copies_available - 1 WHERE book_id = ?";
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, bookId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error while decrementing book copies: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
-}
-public void incrementCopies(int bookId) {
-    String sql = "UPDATE books SET copies_available = copies_available + 1 WHERE book_id = ?";
-    try (Connection conn = ConnectionFactory.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
-        stmt.setInt(1, bookId);
-        stmt.executeUpdate();
-    } catch (SQLException e) {
-        System.err.println("Error while incrementing book copies: " + e.getMessage());
-        e.printStackTrace();
+
+    /**
+     * Increments the available copies of a book by one.
+     * @param bookId The ID of the book to be updated.
+     */
+    public void incrementCopies(int bookId) {
+        String sql = "UPDATE books SET copies_available = copies_available + 1 WHERE book_id = ?";
+        try (Connection conn = ConnectionFactory.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setInt(1, bookId);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.err.println("Error while incrementing book copies: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
-}
 }

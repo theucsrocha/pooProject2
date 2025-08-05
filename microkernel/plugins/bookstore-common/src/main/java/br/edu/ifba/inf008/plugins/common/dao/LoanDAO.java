@@ -15,8 +15,8 @@ import br.edu.ifba.inf008.plugins.common.model.Loan;
 public class LoanDAO {
 
     /**
-     * Salva um novo empréstimo no banco de dados.
-     * @param loan O objeto Loan a ser salvo.
+     * Saves a new loan to the database.
+     * @param loan The Loan object to be saved.
      */
     public void save(Loan loan) {
         String sql = "INSERT INTO loans (user_id, book_id, loan_date) VALUES (?, ?, ?)";
@@ -38,11 +38,10 @@ public class LoanDAO {
     }
 
     /**
-     * Busca todos os empréstimos, juntando dados de usuários e livros para exibição.
-     * @return Uma lista de objetos Loan preenchidos.
+     * Retrieves all loans, joining user and book data for display.
+     * @return A list of populated Loan objects.
      */
     public List<Loan> findAll() {
-        // SQL com JOIN para buscar nomes e títulos em vez de apenas IDs.
         String sql = "SELECT l.loan_id, l.user_id, l.book_id, l.loan_date, l.return_date, " +
                      "u.name as user_name, b.title as book_title " +
                      "FROM loans l " +
@@ -67,7 +66,6 @@ public class LoanDAO {
                 Date returnDate = rs.getDate("return_date");
                 if(returnDate != null) loan.setReturnDate(returnDate.toLocalDate());
                 
-                // Preenche os atributos extras que vieram dos JOINs
                 loan.setUserName(rs.getString("user_name"));
                 loan.setBookTitle(rs.getString("book_title"));
 
@@ -82,8 +80,8 @@ public class LoanDAO {
     }
 
     /**
-     * Registra a devolução de um livro, definindo a data de devolução como a data atual.
-     * @param loanId O ID do empréstimo a ser atualizado.
+     * Marks a loan as returned by setting the current date as the return date.
+     * @param loanId The ID of the loan to be updated.
      */
     public void markAsReturned(int loanId) {
         String sql = "UPDATE loans SET return_date = ? WHERE loan_id = ?";
@@ -91,7 +89,6 @@ public class LoanDAO {
         try (Connection conn = ConnectionFactory.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            // Define a data de devolução como a data de hoje.
             stmt.setDate(1, Date.valueOf(LocalDate.now()));
             stmt.setInt(2, loanId);
 
@@ -104,48 +101,43 @@ public class LoanDAO {
         }
     }
 
-    // Adicione este método dentro da sua classe LoanDAO.java
+    /**
+     * Retrieves all loans that are still active (have no return date).
+     * @return A list of Loan objects representing active loans.
+     */
+    public List<Loan> findAllActive() {
+        String sql = "SELECT l.loan_id, l.user_id, l.book_id, l.loan_date, l.return_date, " +
+                    "u.name as user_name, b.title as book_title " +
+                    "FROM loans l " +
+                    "JOIN users u ON l.user_id = u.user_id " +
+                    "JOIN books b ON l.book_id = b.book_id " +
+                    "WHERE l.return_date IS NULL";
 
-/**
- * Busca todos os empréstimos que ainda estão ativos (sem data de devolução).
- * Este método é específico para o relatório de livros emprestados.
- * @return Uma lista de objetos Loan que representam os empréstimos ativos.
- */
-public List<Loan> findAllActive() {
-    // A SQL é a mesma do findAll, mas com uma cláusula WHERE crucial no final.
-    String sql = "SELECT l.loan_id, l.user_id, l.book_id, l.loan_date, l.return_date, " +
-                 "u.name as user_name, b.title as book_title " +
-                 "FROM loans l " +
-                 "JOIN users u ON l.user_id = u.user_id " +
-                 "JOIN books b ON l.book_id = b.book_id " +
-                 "WHERE l.return_date IS NULL"; // <-- A MÁGICA DO FILTRO ACONTECE AQUI
+        List<Loan> activeLoans = new ArrayList<>();
 
-    List<Loan> activeLoans = new ArrayList<>();
+        try (Connection conn = ConnectionFactory.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql);
+            ResultSet rs = stmt.executeQuery()) {
 
-    try (Connection conn = ConnectionFactory.getConnection();
-         PreparedStatement stmt = conn.prepareStatement(sql);
-         ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                Loan loan = new Loan();
+                loan.setId(rs.getInt("loan_id"));
+                loan.setUserId(rs.getInt("user_id"));
+                loan.setBookId(rs.getInt("book_id"));
 
-        while (rs.next()) {
-            Loan loan = new Loan();
-            loan.setId(rs.getInt("loan_id"));
-            loan.setUserId(rs.getInt("user_id"));
-            loan.setBookId(rs.getInt("book_id"));
+                Date loanDate = rs.getDate("loan_date");
+                if(loanDate != null) loan.setLoanDate(loanDate.toLocalDate());
 
-            Date loanDate = rs.getDate("loan_date");
-            if(loanDate != null) loan.setLoanDate(loanDate.toLocalDate());
+                loan.setUserName(rs.getString("user_name"));
+                loan.setBookTitle(rs.getString("book_title"));
 
-            // Preenche os nomes para o relatório.
-            loan.setUserName(rs.getString("user_name"));
-            loan.setBookTitle(rs.getString("book_title"));
+                activeLoans.add(loan);
+            }
 
-            activeLoans.add(loan);
+        } catch (SQLException e) {
+            System.err.println("Error finding active loans: " + e.getMessage());
+            e.printStackTrace();
         }
-
-    } catch (SQLException e) {
-        System.err.println("Error finding active loans: " + e.getMessage());
-        e.printStackTrace();
+        return activeLoans;
     }
-    return activeLoans;
-}
 }

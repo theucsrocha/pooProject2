@@ -1,7 +1,0 @@
-br\edu\ifba\inf008\plugins\common\db\ConnectionFactory.class
-br\edu\ifba\inf008\plugins\common\model\Loan.class
-br\edu\ifba\inf008\plugins\common\dao\LoanDAO.class
-br\edu\ifba\inf008\plugins\common\dao\BookDAO.class
-br\edu\ifba\inf008\plugins\common\model\User.class
-br\edu\ifba\inf008\plugins\common\dao\UserDAO.class
-br\edu\ifba\inf008\plugins\common\model\Book.class
