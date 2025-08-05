@@ -52,12 +52,12 @@ public class UIController extends Application implements IUIController
         primaryStage.setScene(scene);
         primaryStage.show();
 
-        // Esta linha carrega os plugins DEPOIS que a UI está pronta
+      
         Core.getInstance().getPluginController().init();
     }
 
     public MenuItem createMenuItem(String menuText, String menuItemText) {
-        // Criar o menu caso ele nao exista
+     
         Menu newMenu = null;
         for (Menu menu : menuBar.getMenus()) {
             if (menu.getText() == menuText) {
@@ -70,7 +70,7 @@ public class UIController extends Application implements IUIController
             menuBar.getMenus().add(newMenu);
         }
 
-        // Criar o menu item neste menu
+       
         MenuItem menuItem = new MenuItem(menuItemText);
         newMenu.getItems().add(menuItem);
 

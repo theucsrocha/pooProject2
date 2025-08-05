@@ -136,7 +136,7 @@ public class ManageLoansController {
 
         // Clear and reload all data
         loadLoansIntoTable();
-        loadBooksIntoComboBox(); // Esta linha já atualiza os livros
+        loadBooksIntoComboBox(); 
         bookComboBox.getSelectionModel().clearSelection();
         userComboBox.getSelectionModel().clearSelection();
     }
